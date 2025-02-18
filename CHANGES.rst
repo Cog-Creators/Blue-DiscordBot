@@ -1,5 +1,143 @@
 .. Red changelogs
 
+Redbot 3.5.16 (2025-02-06)
+==========================
+
+| Thanks to all these amazing people that contributed to this release:
+| :ghuser:`Flame442`, :ghuser:`Jackenmen`
+
+This is a hotfix release changing our implementation to prevent crash at startup
+when invalid value of global locale/regional format configuration is encountered.
+We have seen a few reports of this occurring and we believe that this was caused by
+some 3rd-party cog(s) passing invalid values to Red <3.5 i18n APIs as those versions
+did not validate the input in some scenarios. During startup, Red will now simply
+log a warning, if it encounters incorrect global locale/regional format configuration
+and reset it to a known valid value.
+
+----
+
+Redbot 3.5.15 (2025-02-03)
+==========================
+
+| Thanks to all these amazing people that contributed to this release:
+| :ghuser:`aikaterna`, :ghuser:`Flame442`, :ghuser:`Jackenmen`, :ghuser:`Kowlin`
+
+Read before updating
+--------------------
+
+#. openSUSE Leap 15.5 is no longer supported as it has already reached its end of life.
+
+#. Information for Audio users that are using an external Lavalink instance (if you don't know what that is, you should skip this point):
+
+    We've updated our default application.yml file and you should update your instance's ``application.yml`` accordingly.
+    More specifically, we bumped the version of YT source plugin.
+    `Download Red 3.5.15's default application.yml file <https://github.com/Cog-Creators/Red-DiscordBot/releases/download/3.5.15/Red-DiscordBot-3.5.15-default-lavalink-application.yml>`__
+
+End-user changelog
+------------------
+
+Changes
+*******
+
+- **Core - Dependencies** - Red's dependencies have been bumped (:issue:`6512`)
+- **Core - OS Support** - openSUSE Leap 15.5 is no longer supported as it has already reached its end of life (:issue:`6512`)
+- **Cogs - Audio** - The ``[p]audioset logs`` command can now be used in DMs (:issue:`6499`)
+- **Cogs - Trivia - Lists** - Added subnet masks in CIDR notations as answers to subnet-related questions in the ``computers`` trivia (:issue:`6495`)
+
+Fixes
+*****
+
+- **Core - Bot Commands** - The ``[p]set api`` command no longer errors with long service names (:issue:`6478`, :issue:`6502`)
+- |cool| **Cogs - Audio** - Fixed recent YT playback issues (:issue:`6509`, :issue:`6511`)
+
+Developer changelog
+-------------------
+
+- **Core - i18n** - Added `redbot.core.i18n.set_contextual_locale()` and `redbot.core.i18n.set_contextual_regional_format()` functions (:issue:`6022`)
+
+----
+
+Redbot 3.5.14 (2024-12-25)
+==========================
+
+| Thanks to all these amazing people that contributed to this release:
+| :ghuser:`aikaterna`, :ghuser:`Ascensionn`, :ghuser:`cswimr`, :ghuser:`Chovin`, :ghuser:`cdaman3141`, :ghuser:`DJTOMATO`, :ghuser:`Flame442`, :ghuser:`japandotorg`, :ghuser:`Jackenmen`, :ghuser:`karlsbjorn`, :ghuser:`Kowlin`, :ghuser:`kpopdev`, :ghuser:`kevin1015wang`, :ghuser:`Kreusada`, :ghuser:`mellow-org`, :ghuser:`palmtree5`, :ghuser:`sravan1946`, :ghuser:`TrustyJAID`
+
+Read before updating
+--------------------
+
+#. Following operating systems are no longer supported as they have already reached their end of life:
+
+    - Debian 11 (excluding Raspberry Pi OS 11)
+    - Fedora 39
+    - macOS 12 (Monterey)
+
+#. Information for Audio users that are using an external Lavalink instance (if you don't know what that is, you should skip this point):
+
+    We've updated our default application.yml file and you should update your instance's ``application.yml`` accordingly.
+    More specifically, we bumped the version of YT source plugin.
+    `Download Red 3.5.14's default application.yml file <https://github.com/Cog-Creators/Red-DiscordBot/releases/download/3.5.14/Red-DiscordBot-3.5.14-default-lavalink-application.yml>`__
+
+End-user changelog
+------------------
+
+Additions
+*********
+
+- |cool| **Cogs - Mod** - Added new setting (``[p]modset requirereason``) for enforcing reason to be filled in cog's commands (:issue:`6477`)
+
+Changes
+*******
+
+- |cool| **Core** - Updated the output from help command to enable use of the new copy to clipboard feature on Discord code blocks to copy the command input (:issue:`6244`)
+- **Core** - Updated ID parser used by some (core and 3rd-party) commands to reject IDs that are larger than a Discord ID (snowflake) can be (:issue:`6431`, :issue:`6486`)
+- |cool| **Core - Bot Commands** - The ``[p]slash disablecog`` and ``[p]slash enablecog`` commands can now be passed multiple cog names to disable/enable app commands from many cogs at the same time (:issue:`6001`)
+- **Core - Dependencies** - Red's dependencies have been bumped (:issue:`6492`)
+- **Core - OS Support** - Debian 11, Fedora 39, and macOS 12 (Monterey) are no longer supported as they have already reached end of life (:issue:`6492`)
+- **Core - OS Support** - Ubuntu non-LTS version is currently considered unsupported due to lack of support for Python 3.12 from Red (:issue:`6492`)
+- **Cogs - Audio** - The ``[p]play`` command will now mention how the URL restrictions can be disabled, if they're currently enabled (:issue:`6348`)
+- **Cogs - Audio** - The Lavalink download process now has a separate, larger, timeout than the timeout for startup of the Lavalink process (:issue:`6460`, :issue:`6461`)
+- **Cogs - Downloader** - Changed the format of the ``[p]repo list`` command's output to include repo links (:issue:`6284`)
+- |cool| **Cogs - Warnings** -  The ``[p]warn`` command will now prompt whether to ban the user, if that user has already left the server by the time the command was called (:issue:`6445`, :issue:`6481`)
+- **Cogs - Trivia - Lists** - Added variants of the answers without punctuation to the ``harrypotter`` trivia list (:issue:`5889`)
+
+Fixes
+*****
+
+- **Core** - Fixed issues with permission handling for user-installable app commands (:issue:`6457`)
+- **Core - Bot Commands** - Fixed uncaught error when running ``[p]load locales`` command (:issue:`4623`)
+- |cool| **Cogs - Audio** - Fixed various issues with YT playback resulting in "Something broke when playing the track" error (:issue:`6488`, :issue:`6490`)
+- **Cogs - Trivia - Lists** - Fixed typos in Golden Glove questions in the ``worldcup`` trivia list (:issue:`6441`)
+
+Developer changelog
+-------------------
+
+Additions
+*********
+
+- |cool| **Core - Bot Class** - Added `Red.get_app_command_id()` and `Red.get_app_command_mention()` methods for getting app command IDs/mentions from Red's cache (:issue:`5976`, :issue:`6278`)
+- **Core - Utils Package** - Added `hyperlink()`, `header()`, and `subtext()` chat formatting functions (:issue:`6102`, :issue:`6444`)
+- |cool| **Core - Utils Package** - Added `redbot.core.utils.chat_formatting.rich_markup()` function for generating Discord-compatible code blocks with ANSI formatting using a limited set of `Rich markup <https://rich.readthedocs.io/en/stable/markup.html>`__ (:issue:`5538`)
+- **Cogs - Downloader** - Downloader will now replace ``[botname]`` in the install messages with the bot's name, same as is done for command help messages (:issue:`6443`)
+
+Changes
+*******
+
+- **Core - Utils Package** - Added support for `SimpleMenu` to customize the select options before sending (:issue:`6455`, :issue:`6480`)
+
+Deprecations
+************
+
+- **Core - Utils Package** - Deprecated `SimpleMenu.select_menu` attribute (:issue:`6480`)
+
+Fixes
+*****
+
+- **Core** - Fixed the cooldown bypass (enabled by ``[p]bypasscooldowns`` command) not being respected by the ``[p]slash sync`` command (:issue:`6465`)
+- **Core - Commands Package** - Updated `RawUserIdConverter` to reject IDs that are larger than a Discord ID (snowflake) can be (:issue:`6431`, :issue:`6486`)
+
+----
+
 Redbot 3.5.13 (2024-08-27)
 ==========================
 
